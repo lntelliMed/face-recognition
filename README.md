@@ -1,8 +1,8 @@
 
-# Face Recognition Brain: A Face recognition app built using Clarifai API.
+# Face Recognition Brain: An app that will detect faces in your pictures.
 
-Technologies used include React, HTML5, CSS3, Clarifai API.
+Technologies used include React, HTML5/CSS3, Tachyons, Clarifai API.
 
 [See this app live!](https://lntellimed.github.io/face-recognition/)
 
-![alt text](screenshots/face-recognition.png "Clarifai Face Recognition")
+![alt text](screenshots/face-recognition.png "Face Recognition Brain")

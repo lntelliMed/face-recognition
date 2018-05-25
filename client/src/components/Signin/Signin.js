@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 
 class Signin extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      signInEmail: '',
-      signInPasword: ''
-    }
+  state = {
+    signInEmail: '',
+    signInPasword: ''
   }
 
   onEmailChange = (event) => {
@@ -31,11 +28,17 @@ class Signin extends Component {
       })
     })
     .then(response => response.json())
-    .then(data => {
-      if (data === 'success') {
-        this.props.onRouteChange('home');
-      }
-    });
+    .then(user => {
+        if (user.id) {
+          this.props.loadUser(user);
+          this.props.onRouteChange('home');
+        }
+      });
+    // .then(data => {
+    //   if (data === 'success') {
+    //     this.props.onRouteChange('home');
+    //   }
+    // });
   }
 
   render () {

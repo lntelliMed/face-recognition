@@ -27,7 +27,7 @@ const app = new Clarifai.App({
   apiKey: 'b699b8e6745e42a29e956df7b4a9115d'
 });
 
-// Ssmple images:
+// Sample images:
 // http://pngimg.com/uploads/face/face_PNG5641.png
 // http://bc01.rp-online.de/polopoly_fs/1.6564102.1485510288!image/3412529908.jpg_gen/derivatives/d950x950/3412529908.jpg
 
@@ -37,7 +37,14 @@ class App extends Component {
     imageUrl: '',
     box: {},
     route: 'signin',
-    isSignedIn: false
+    isSignedIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: ''
+    }
   }
 
   componentDidMount () {
@@ -45,6 +52,18 @@ class App extends Component {
     // fetch('http://localhost:3000/')
     //   .then(response => response.json())
     //   .then(console.log);
+  }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }
+    });
   }
 
   calculateFaceLocation = (data) => {
@@ -110,14 +129,14 @@ class App extends Component {
         {route === 'home'
                 ? <div>
                     <Logo />
-                    <Rank />
+                    <Rank name={this.state.user.name} entries={this.state.user.entries} />
                     <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
                     <FaceRecognition box={box} imageUrl={imageUrl} />
                   </div>
                 : (
                     this.state.route === 'signin'
-                          ? < Signin onRouteChange={this.onRouteChange} />
-                          : < Register onRouteChange={this.onRouteChange} />
+                          ? < Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                          : < Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 
                   )
         }

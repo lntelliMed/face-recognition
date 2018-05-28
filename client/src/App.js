@@ -27,7 +27,7 @@ const app = new Clarifai.App({
   apiKey: 'b699b8e6745e42a29e956df7b4a9115d'
 });
 
-const initialState = state = {
+const initialState = {
   input: 'http://pngimg.com/uploads/face/face_PNG5641.png',
   imageUrl: '',
   box: {},
@@ -121,7 +121,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState(this.initialState);
+      this.setState(initialState);
     } else if (route === 'home') {
       this.setState({isSignedIn: true});
     }

@@ -27,25 +27,23 @@ const app = new Clarifai.App({
   apiKey: 'b699b8e6745e42a29e956df7b4a9115d'
 });
 
-// Sample images:
-// http://pngimg.com/uploads/face/face_PNG5641.png
-// http://bc01.rp-online.de/polopoly_fs/1.6564102.1485510288!image/3412529908.jpg_gen/derivatives/d950x950/3412529908.jpg
+const initialState = state = {
+  input: 'http://pngimg.com/uploads/face/face_PNG5641.png',
+  imageUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+};
 
 class App extends Component {
-  state = {
-    input: 'http://pngimg.com/uploads/face/face_PNG5641.png',
-    imageUrl: '',
-    box: {},
-    route: 'signin',
-    isSignedIn: false,
-    user: {
-      id: '',
-      name: '',
-      email: '',
-      entries: 0,
-      joined: ''
-    }
-  }
+  state = initialState;
 
   componentDidMount () {
     this.onPictureSubmit();
@@ -113,7 +111,8 @@ class App extends Component {
               }
 
             });
-          });
+          })
+          .catch(console.log);
         }
         this.displayFaceBox(this.calculateFaceLocation(response));
       })
@@ -121,17 +120,14 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
-    let isSignedIn = this.state.isSignedIn;
-
     if (route === 'signout') {
-      isSignedIn = false;
+      this.setState(this.initialState);
     } else if (route === 'home') {
-      isSignedIn = true;
+      this.setState({isSignedIn: true});
     }
 
     this.setState({
-      route,
-      isSignedIn
+      route
     });
   }
 

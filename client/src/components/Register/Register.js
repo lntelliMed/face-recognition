@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Register extends Component {
   state = {
     email: '',
-    passowrd: '',
+    password: '',
     name: ''
   }
 
@@ -21,7 +21,7 @@ class Register extends Component {
 
   onPasswordChange = (event) => {
     this.setState({
-      passowrd: event.target.value
+      password: event.target.value
     });
   }
 

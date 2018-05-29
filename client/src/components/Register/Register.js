@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+const SERVER = process.env.SERVER || 'http://localhost:3000';
+
 class Register extends Component {
   state = {
     email: '',
@@ -26,7 +28,7 @@ class Register extends Component {
   }
 
   onSubmitSignIn = () => {
-    fetch('http://localhost:3000/register', {
+    fetch(SERVER + '/register', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

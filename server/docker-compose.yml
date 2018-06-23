@@ -4,21 +4,50 @@ version: '3.3'
 #   docker-compose down
 #   docker-compose build
 #   docker-compose run smart-brain-api
-
 # or
+#   docker ps
 #   docker-compose down
 #   docker-compose up --build
 #   docker-compose up
 
+
+#   docker-compose up -d
+#   docker-compose exec smart-brain-api bash
+
 services:
+  # Backend API
   smart-brain-api:
     container_name: backend
     # image: node:9.11.2
     build: ./
     command: npm start
     working_dir: /usr/src/smart-brain-api
+    environment:
+      # POSTGRES_USER: sally
+      # POSTGRES_PASSWORD: secret
+      # POSTGRES_DB: smart-brain-docker
+      # POSTGRES_HOST: postgres
+      POSTGRES_URI: postgres://sally:secret@postgres:5432/smart-brain-docker
+    links:
+      - postgres
     ports:
         - "3000:3000"
+    volumes:
+      - ./:/usr/src/smart-brain-api
+
+  # Postgres
+  postgres:
+    environment:
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smart-brain-docker
+      POSTGRES_HOST: postgres
+    # image: postgres
+    build: ./postgres
+    ports:
+      - "5432:5432"
+
+
 
 
 

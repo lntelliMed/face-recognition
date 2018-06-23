@@ -12,18 +12,39 @@ const image = require('./controllers/image');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DATABASE_URL = process.env.DATABASE_URL || '127.0.0.1';
+const DATABASE_URL = process.env.DATABASE_URL || process.env.POSTGRES_HOST || '127.0.0.1';
 
-const connConfig = process.env.DATABASE_URL ? {
-                        connectionString: DATABASE_URL,
-                        ssl: true
-                      } :
-                      {
-                        host: DATABASE_URL,
-                        // user: 'sam',
-                        // password: '',
-                        database: 'smart-brain'
-                      };
+// const USER = process.env.POSTGRES_USER;
+// const PASSWORD = process.env.POSTGRES_PASSWORD;
+// const DATABASE = process.env.POSTGRES_DB;
+
+// const connConfig = process.env.DATABASE_URL ? {
+//                         connectionString: DATABASE_URL,
+//                         ssl: true
+//                       } :
+//                       {
+//                         host: DATABASE_URL,
+//                         // user: 'sam',
+//                         // password: '',
+//                         database: 'smart-brain'
+//                       };
+
+let connConfig;
+if (process.env.DATABASE_URI) {
+  connConfig = process.env.DATABASE_URI;
+} else if (process.env.DATABASE_URL) {
+  connConfig = {
+    connectionString: DATABASE_URL,
+      ssl: true
+  };
+} else {
+  connConfig = {
+    host: DATABASE_URL,
+    // user: 'sam',
+    // password: '',
+    database: 'smart-brain'
+  };
+}
 
 const db = knex({ client: 'pg', connection: connConfig });
 

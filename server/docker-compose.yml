@@ -1,0 +1,25 @@
+version: '3.3'
+
+# Notes:
+#   docker-compose down
+#   docker-compose build
+#   docker-compose run smart-brain-api
+
+# or
+#   docker-compose down
+#   docker-compose up --build
+#   docker-compose up
+
+services:
+  smart-brain-api:
+    container_name: backend
+    # image: node:9.11.2
+    build: ./
+    command: npm start
+    working_dir: /usr/src/smart-brain-api
+    ports:
+        - "3000:3000"
+
+
+
+

@@ -27,8 +27,8 @@ const initialState = {
   input: 'http://pngimg.com/uploads/face/face_PNG5641.png',
   imageUrl: '',
   boxes: [],
-  route: 'signin',
-  isSignedIn: false,
+  route: 'home',
+  isSignedIn: true,
   user: {
     id: '',
     name: '',

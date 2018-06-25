@@ -6,7 +6,7 @@ const navigation = (props) => {
   if (props.isSignedIn) {
     return (
       <nav style={{ display: 'flex', justifyContent: 'flex-end' }} >
-        <ProfileIcon onRouteChange={props.onRouteChange} />
+        <ProfileIcon onRouteChange={props.onRouteChange} toggleModal={props.toggleModal} />
       </nav>
     );
   } else {

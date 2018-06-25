@@ -30,8 +30,8 @@ const DATABASE_URL = process.env.DATABASE_URL || process.env.POSTGRES_HOST || '1
 //                       };
 
 let connConfig;
-if (process.env.DATABASE_URI) {
-  connConfig = process.env.DATABASE_URI;
+if (process.env.POSTGRES_URI) {
+  connConfig = process.env.POSTGRES_URI;
 } else if (process.env.DATABASE_URL) {
   connConfig = {
     connectionString: DATABASE_URL,

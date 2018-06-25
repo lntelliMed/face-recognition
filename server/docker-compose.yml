@@ -27,7 +27,7 @@ services:
       # POSTGRES_PASSWORD: secret
       # POSTGRES_DB: smart-brain-docker
       # POSTGRES_HOST: postgres
-      POSTGRES_URI: postgres://sally:secret@postgres:5432/smart-brain-docker
+      POSTGRES_URI: postgres://admin:password@postgres:5432/smart-brain
     links:
       - postgres
     ports:
@@ -38,9 +38,9 @@ services:
   # Postgres
   postgres:
     environment:
-      POSTGRES_USER: sally
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: smart-brain-docker
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: smart-brain
       POSTGRES_HOST: postgres
     # image: postgres
     build: ./postgres

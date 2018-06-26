@@ -45,7 +45,24 @@ class App extends Component {
   state = initialState;
 
   componentDidMount () {
-    this.onPictureSubmit();
+    const token = window.sessionStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if (data && data.id) {
+          console.log('success we need to get user profile');
+          this.onPictureSubmit();
+        }
+      })
+      .catch(console.log);
+    }
   }
 
   loadUser = (data) => {

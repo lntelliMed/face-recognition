@@ -22,6 +22,10 @@ class Signin extends Component {
     });
   }
 
+  saveAuthTokenInSession = (token) => {
+    window.sessionStorage.setItem('token', token);
+  }
+
   onSubmitSignIn = () => {
     fetch(SERVER + '/signin' , {
       method: 'post',
@@ -33,7 +37,8 @@ class Signin extends Component {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.userId) {
+        if (data.userId && data.success === 'true') {
+          this.saveAuthTokenInSession(data.token);
           this.props.loadUser(data);
           this.props.onRouteChange('home');
         }

@@ -127,43 +127,43 @@ class App extends Component {
       imageUrl: this.state.input
     });
 
-      fetch(SERVER + '/imageurl', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': window.sessionStorage.getItem('token')
-        },
-        body: JSON.stringify({
-          input: this.state.input
+    fetch(SERVER + '/imageurl', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': window.sessionStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response) {
+        fetch(SERVER + '/image', {
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
         })
-      })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          fetch(SERVER + '/image', {
-            method: 'put',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': window.sessionStorage.getItem('token')
-            },
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          })
-          .then(response => response.json())
-          .then(count => {
-            this.setState({
-              user: {
-                ...this.state.user,
-                entries: count
-              }
-            });
-          })
-          .catch(console.log);
-        }
-        this.displayFaceBoxes(this.calculateFaceLocations(response));
-      })
-      .catch(err => console.error(err));
+        .then(response => response.json())
+        .then(count => {
+          this.setState({
+            user: {
+              ...this.state.user,
+              entries: count
+            }
+          });
+        })
+        .catch(console.log);
+      }
+      this.displayFaceBoxes(this.calculateFaceLocations(response));
+    })
+    .catch(err => console.error(err));
   }
 
   onRouteChange = (route) => {

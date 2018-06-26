@@ -91,24 +91,29 @@ class App extends Component {
   }
 
   calculateFaceLocations = (data) => {
-    const image = document.getElementById('inputImage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return data.outputs[0].data.regions.map(face => {
-            const clarifaiFace = face.region_info.bounding_box;
-            return {
-                    leftCol: clarifaiFace.left_col * width,
-                    topRow: clarifaiFace.top_row * height,
-                    rightCol: width - (clarifaiFace.right_col * width),
-                    bottomRow: height - (clarifaiFace.bottom_row * height)
-            };
-     });
+    if (data && data.outputs) {
+      const image = document.getElementById('inputImage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+      return data.outputs[0].data.regions.map(face => {
+              const clarifaiFace = face.region_info.bounding_box;
+              return {
+                      leftCol: clarifaiFace.left_col * width,
+                      topRow: clarifaiFace.top_row * height,
+                      rightCol: width - (clarifaiFace.right_col * width),
+                      bottomRow: height - (clarifaiFace.bottom_row * height)
+              };
+       });
+    }
+    return;
   }
 
   displayFaceBoxes = (boxes) => {
-    this.setState({
-      boxes
-    });
+    if (boxes && boxes.length) {
+      this.setState({
+        boxes
+      });
+    }
   }
 
   onInputChange = (event) => {
@@ -124,7 +129,10 @@ class App extends Component {
 
       fetch(SERVER + '/imageurl', {
         method: 'post',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': window.sessionStorage.getItem('token')
+        },
         body: JSON.stringify({
           input: this.state.input
         })
@@ -134,7 +142,10 @@ class App extends Component {
         if (response) {
           fetch(SERVER + '/image', {
             method: 'put',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': window.sessionStorage.getItem('token')
+            },
             body: JSON.stringify({
               id: this.state.user.id
             })
